@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAQ Air Quality App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>OpenAQ Air Quality Information</h1>
+        
+        <div class="info-card">
+            <p>This application provides real-time air quality data from the OpenAQ platform. You can select a location ID to view detailed information about air quality parameters including:</p>
+            <ul>
+                <li>PM2.5 and PM10 (particulate matter)</li>
+                <li>Ozone (O₃)</li>
+                <li>Nitrogen dioxide (NO₂)</li>
+                <li>Sulfur dioxide (SO₂)</li>
+                <li>Carbon monoxide (CO)</li>
+            </ul>
+            <p>The app displays the latest measurements along with their Air Quality Index (AQI) categories where applicable.</p>
+        </div>
+        
+        <form action="{{ url_for('location_details', location_id=0) }}" id="location-form">
+            <label for="location-select">Select a location ID:</label>
+            <select id="location-select" name="location_id">
+                <option value="">--Please select a location--</option>
+                {% for loc_id in location_ids %}
+                <option value="{{ loc_id }}">{{ loc_id }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" id="view-button">View Air Quality Data</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('view-button').addEventListener('click', function() {
+            const selectElement = document.getElementById('location-select');
+            const locationId = selectElement.value;
+            
+            if (locationId) {
+                window.location.href = "/location/" + locationId;
+            } else {
+                alert("Please select a location ID.");
+            }
+        });
+    </script>
+</body>
+</html>

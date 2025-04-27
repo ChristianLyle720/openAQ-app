@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    color: #333;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+select, button {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #2980b9;
+}
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+}
+.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ffeeba;
+}
+.back-button {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #3498db;
+    text-decoration: none;
+}
+.location-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.location-card h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+.location-card h3 {
+    color: #34495e;
+    margin: 15px 0 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+table th, table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* New styles for air quality data display */
+.last-update {
+    font-size: 0.8em;
+    color: #777;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+span.warning {
+    color: #856404;
+    font-style: italic;
+}
+
+/* Air quality index color coding */
+.aqi-good {
+    background-color: #8BC34A;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.aqi-moderate {
+    background-color: #FFC107;
+    color: #333;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.aqi-unhealthy-sensitive {
+    background-color: #FF9800;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.aqi-unhealthy {
+    background-color: #F44336;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.aqi-very-unhealthy {
+    background-color: #9C27B0;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.aqi-hazardous {
+    background-color: #880E4F;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.info-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.info-card ul {
+    margin: 10px 0 10px 20px;
+}
+
+.info-card p {
+    margin-bottom: 10px;
+}
+
+.aqi-info {
+    margin-top: 20px;
+}
+
+.aqi-info table {
+    margin-top: 10px;
+}

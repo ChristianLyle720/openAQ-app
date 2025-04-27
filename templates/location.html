@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ location.name }} Air Quality</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="back-button">← Back to Location Selection</a>
+        
+        <div class="location-card">
+            <h1>{{ location.name }}</h1>
+            
+            <div class="location-info">
+                <h3>Location Information</h3>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ location.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Country</th>
+                        <td>{{ location.country.name }} ({{ location.country.code }})</td>
+                    </tr>
+                    <tr>
+                        <th>Locality</th>
+                        <td>{{ location.locality }}</td>
+                    </tr>
+                    <tr>
+                        <th>Timezone</th>
+                        <td>{{ location.timezone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Coordinates</th>
+                        <td>{{ location.coordinates.latitude }}, {{ location.coordinates.longitude }}</td>
+                    </tr>
+                    <tr>
+                        <th>Provider</th>
+                        <td>{{ location.provider.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Owner</th>
+                        <td>{{ location.owner.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>First Reading</th>
+                        <td>{{ location.datetimeFirst.local }}</td>
+                    </tr>
+                    <tr>
+                        <th>Latest Reading</th>
+                        <td>{{ location.datetimeLast.local }}</td>
+                    </tr>
+                </table>
+            </div>
+            
+            {% if location.sensors %}
+            <div class="sensors-info">
+                <h3>Available Sensors and Latest Measurements</h3>
+                <p class="last-update">Data fetched on: {{ fetch_time }}</p>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Parameter</th>
+                        <th>Units</th>
+                        <th>Latest Value</th>
+                        <th>Air Quality</th>
+                        <th>Timestamp</th>
+                    </tr>
+                    {% for sensor in location.sensors %}
+                    <tr>
+                        <td>{{ sensor.id }}</td>
+                        <td>{{ sensor.parameter.displayName or sensor.parameter.name }}</td>
+                        <td>{{ sensor.parameter.units }}</td>
+                        <td>
+                            {% if sensor.latest_measurement %}
+                                {{ sensor.latest_measurement.value }}
+                            {% else %}
+                                <span class="warning">No data</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if sensor.aqi %}
+                                <span class="{{ sensor.aqi.css_class }}">{{ sensor.aqi.category }}</span>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if sensor.latest_measurement and sensor.latest_measurement.period %}
+                                {{ sensor.latest_measurement.period.datetimeFrom.local }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+            
+            {% if location.instruments %}
+            <div class="instruments-info">
+                <h3>Instruments</h3>
+                <ul>
+                    {% for instrument in location.instruments %}
+                    <li>{{ instrument.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div class="aqi-info">
+                <h3>Air Quality Index (AQI) Categories</h3>
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><span class="aqi-good">Good</span></td>
+                        <td>Air quality is satisfactory, and air pollution poses little or no risk.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="aqi-moderate">Moderate</span></td>
+                        <td>Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="aqi-unhealthy-sensitive">Unhealthy for Sensitive Groups</span></td>
+                        <td>Members of sensitive groups may experience health effects. The general public is less likely to be affected.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="aqi-unhealthy">Unhealthy</span></td>
+                        <td>Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="aqi-very-unhealthy">Very Unhealthy</span></td>
+                        <td>Health alert: The risk of health effects is increased for everyone.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="aqi-hazardous">Hazardous</span></td>
+                        <td>Health warning of emergency conditions: everyone is more likely to be affected.</td>
+                    </tr>
+                </table>
+            </div>
+            
+            {% if location.licenses %}
+            <div class="licenses-info">
+                <h3>Data Licenses</h3>
+                <ul>
+                    {% for license in location.licenses %}
+                    <li>
+                        {{ license.name }}
+                        {% if license.attribution and license.attribution.name %}
+                        ({{ license.attribution.name }})
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
