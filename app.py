@@ -58,13 +58,11 @@ def get_aqi_category(parameter, value):
 # OpenAQ API Key
 API_KEY = "f68b9b4b6bcab3293b00b1d1a0fc95f84198c5f48d432dafd70735a3ef4ebd71"
 
-# Generate location IDs from 500 to 8000 with step 500
-LOCATION_IDS = list(range(500, 8500, 500))
 
 @app.route('/')
 def index():
     """Home page with location selection."""
-    return render_template('index.html', location_ids=LOCATION_IDS)
+    return render_template('index.html')
 
 def get_latest_measurement(sensor_id):
     """Fetch the latest measurement for a specific sensor."""

@@ -55,11 +55,13 @@ openaq-app/
 
 ## API Key
 
-The application uses an OpenAQ API key which is hardcoded in the app.py file. In a production environment, it's recommended to use environment variables for sensitive information.
+The application uses an OpenAQ API key which is hardcoded in the app.py file.
 
 ## Features
 
-- Select from a list of location IDs (500, 1000, 1500, ..., 8000)
+- Two ways to select a location:
+  - Choose from a predefined list of locations with both ID and name (e.g., "500 - Frenchtown, MT (US)")
+  - Enter any custom location ID to test additional locations
 - View detailed location information and metadata
 - Display latest air quality measurements from each sensor at the location
 - View measurement values with timestamps

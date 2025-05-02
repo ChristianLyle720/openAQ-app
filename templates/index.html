@@ -11,7 +11,7 @@
         <h1>OpenAQ Air Quality Information</h1>
         
         <div class="info-card">
-            <p>This application provides real-time air quality data from the OpenAQ platform. You can select a location ID to view detailed information about air quality parameters including:</p>
+            <p>This application provides real-time air quality data from the OpenAQ platform. You can select a location from our worldwide list or enter a custom location ID to view detailed information about air quality parameters including:</p>
             <ul>
                 <li>PM2.5 and PM10 (particulate matter)</li>
                 <li>Ozone (O₃)</li>
@@ -22,19 +22,46 @@
             <p>The app displays the latest measurements along with their Air Quality Index (AQI) categories where applicable.</p>
         </div>
         
-        <form action="{{ url_for('location_details', location_id=0) }}" id="location-form">
-            <label for="location-select">Select a location ID:</label>
-            <select id="location-select" name="location_id">
-                <option value="">--Please select a location--</option>
-                {% for loc_id in location_ids %}
-                <option value="{{ loc_id }}">{{ loc_id }}</option>
-                {% endfor %}
-            </select>
-            <button type="button" id="view-button">View Air Quality Data</button>
-        </form>
+        <div class="form-container">
+            <div class="form-section">
+                <h3>Option 1: Select a location</h3>
+                <label for="location-select">Choose a location:</label>
+                <select id="location-select" name="location_id">
+                    <option value="">--Please select a location--</option>
+                    <option value="60">60 - Haringey (UK)</option>
+                    <option value="100">100 - Badhoevedorp (Netherlands)</option>
+                    <option value="500">500 - Frenchtown, MT (US)</option>
+                    <option value="650">650 - Tahoe City, CA (US)</option>
+                    <option value="1000">1000 - Presque Isle River (US)</option>
+                    <option value="1500">1500 - Beaumont, TX (US)</option>
+                    <option value="2000">2000 - Sandcut, IL (US)</option>
+                    <option value="3000">3000 - Veles (North Macedonia)</option>
+                    <option value="3500">3500 - Bouches-du-Rhône (France)</option>
+                    <option value="4000">4000 - Joué lès Tours (France)</option>
+                    <option value="4500">4500 - Niesky (Germany)</option>
+                    <option value="7000">7000 - Detroit, MI (US)</option>
+                    <option value="7500">7500 - Hoopa, CA (US)</option>
+                    <option value="8000">8000 - Nezahualcóyotl (Mexico)</option>
+                    <option value="8118">8118 - New Delhi (India)</option>
+                    <option value="9100">9100 - Shengousi (China)</option>
+                </select>
+                <button type="button" id="view-button">View Selected Location</button>
+            </div>
+            
+            <div class="or-divider">OR</div>
+            
+            <div class="form-section">
+                <h3>Option 2: Enter custom ID</h3>
+                <label for="custom-location-id">Enter a location ID:</label>
+                <input type="number" id="custom-location-id" min="1" placeholder="Enter a numeric location ID">
+                <button type="button" id="custom-view-button">View Custom Location</button>
+                <p class="help-text">Enter any numeric OpenAQ location ID to test</p>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Handler for dropdown menu
         document.getElementById('view-button').addEventListener('click', function() {
             const selectElement = document.getElementById('location-select');
             const locationId = selectElement.value;
@@ -44,6 +71,31 @@
             } else {
                 alert("Please select a location ID.");
             }
+        });
+        
+        // Handler for custom location ID input
+        document.getElementById('custom-view-button').addEventListener('click', function() {
+            const inputElement = document.getElementById('custom-location-id');
+            const customLocationId = inputElement.value.trim();
+            
+            if (customLocationId && !isNaN(customLocationId) && parseInt(customLocationId) > 0) {
+                window.location.href = "/location/" + parseInt(customLocationId);
+            } else {
+                alert("Please enter a valid numeric location ID.");
+            }
+        });
+        
+        // Add enter key support for the input field
+        document.getElementById('custom-location-id').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('custom-view-button').click();
+            }
+        });
+        
+        // Ensure only numbers can be entered in the input field
+        document.getElementById('custom-location-id').addEventListener('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '');
         });
     </script>
 </body>
